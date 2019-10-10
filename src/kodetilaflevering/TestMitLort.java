@@ -2,125 +2,202 @@ package kodetilaflevering;
 
 import java.util.Random;
 
-
 public class TestMitLort {
- public static void main(String[] args) {
-	  int n = 30;
-	  int s = 5;
-	  int t = 100;
-	  
-	  runSimulation(n, s, t);
- }
- 
- 
- public static void runSimulation(int n, int s, int t) {
-	 tjekParametre(n, s, t);
-	 
-	 int kat[] = new int[2];
-	 int mus[] = new int[2];
-	 
-	 int p = n/2;
-	 
-		kat[0]=0;
-		kat[1]=0;
-		
-		mus[0]=p;
-		mus[1]=p;
-	 
-	 moveMus(n, s, t, mus);
-	 
-	// moveKat();
-	 
- }
-  
- public static boolean tjekParametre(int n, int s, int t) {
-	 if(n > 0 || 0 <= s || s <= n || t>=0) {
-		 return true;		 
-	 }else {
-		 return false;
-	 }
- }
- 
- public static void moveMus(int n, int s, int t, int[] m) {
-	 for(int i = 0; i != 100; i++) {
-		 Random randMus = new Random();
-		 int dx = randMus.nextInt(s+1); //Musen bevæger sig en tilfældig afstand i x.
-		 int dy = s-dx; //musen bevæger sig altid s, så den afstand som den skal bevæge sig i y, er resten af stykket fra x.
-		 int o = 0; //overflow variabel for x til y.
-		 int OY = 0; // overflow variabel fra y til x.
-		 int p = n/2; //vi laver igen en p.
-		 
-		 //vi gør det tilfældigt om musen bevæger sig pos eller neg i y og x
-		 Random plusMinus = new Random();
+	public static void main(String[] args) {
+		int n = 30;
+		int s = 5;
+		int t = 100;
+
+		runSimulation(n, s, t);
+	}
+
+	public static void runSimulation(int n, int s, int t) {
+		tjekParametre(n, s, t);
+
+		int kat[] = new int[2];
+		int mus[] = new int[2];
+
+		int p = n / 2;
+
+		kat[0] = 0;
+		kat[1] = 0;
+
+		mus[0] = p;
+		mus[1] = p;
+
+		move(n, s, t, mus, kat);
+
+		// moveKat();
+
+	}
+
+	public static boolean tjekParametre(int n, int s, int t) {
+		if (n > 0 && 0 <= s && s <= n && t >= 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static void move(int n, int s, int t, int[] m, int[] k) {
+		for (int i = 0; i != 10; i++) {
+			Random randMus = new Random();
+			int dx = randMus.nextInt(s + 1); // Musen bevï¿½ger sig en tilfï¿½ldig afstand i x.
+			int dy = s - dx; // musen bevï¿½ger sig altid s, sï¿½ den afstand som den skal bevï¿½ge sig i y, er
+			// resten af stykket fra x.
+			int o = 0; // overflow variabel for x til y.
+			int OY = 0; // overflow variabel fra y til x.
+			int p = n / 2; // vi laver igen en p.
+
+			// vi gï¿½r det tilfï¿½ldigt om musen bevï¿½ger sig pos eller neg i y og x
+			Random plusMinus = new Random();
 			int randMusX = plusMinus.nextInt(4);
 			int randMusY = plusMinus.nextInt(4);
-			
-			//nu bestemmer vi hvilken retning musen skal bevæge sig, alt efeter hvad tilfædigheden gav
-			if(randMusX == 1 || randMusX == 3) {
-				//vi kan få tallene 0 og 1, så hvis den er nul, bevæger musen sig neg x, vi tjekker først,
-				//om den afstand som musen VIL bevæge sig i x, er større end den afstan som den har hen til
-				//kanten, den vil sige dens x-koordinat
-				if(m[0] < dx) {
-					//den kan så kun bevæge sig sin egen afstand
+
+			// nu bestemmer vi hvilken retning musen skal bevï¿½ge sig, alt efeter hvad
+			// tilfï¿½digheden gav
+			if (randMusX == 1 || randMusX == 3) {
+				// vi kan fï¿½ tallene 0 og 1, sï¿½ hvis den er nul, bevï¿½ger musen sig neg x, vi
+				// tjekker fï¿½rst,
+				// om den afstand som musen VIL bevï¿½ge sig i x, er stï¿½rre end den afstan som den
+				// har hen til
+				// kanten, den vil sige dens x-koordinat
+				if (m[0] <= dx) {
+					// den kan sï¿½ kun bevï¿½ge sig sin egen afstand
 					m[0] = m[0] - m[0];
-					//vi har så en rest, som er den afstand den nu 	SKAL bevæge sig ekstra i y
+					// vi har sï¿½ en rest, som er den afstand den nu SKAL bevï¿½ge sig ekstra i y
 					o = dx - m[0];
-				}else {
+				} else {
 					m[0] = m[0] - dx;
 					o = 0;
 				}
-			}else {
-				if(m[0] < n) {
-					int e = n - m[0];
-					if(e < dx) {
+			} else {
+				if (m[0] <= n - 1) {
+					int e = n - 1 - m[0];
+					if (e < dx) {
 						m[0] = m[0] + e;
 						o = dx - e;
-					}else {
+					} else {
 						m[0] = m[0] + dx;
 						o = 0;
 					}
 				}
 			}
-			//vi siger nu at den afstand som musen kan bevæge sig, må være dy + o
+			// vi siger nu at den afstand som musen kan bevï¿½ge sig, mï¿½ vï¿½re dy + o
 			dy = dy + o;
-			
-			if(randMusY == 0) {
-				if(m[1] < dy) {
+
+			if (randMusY == 1 || randMusY == 3) {
+				if (m[1] <= dy) {
 					m[1] = m[1] - m[1];
 					OY = dy - m[1];
-					if(m[0] > p) {
+					if (m[0] > p) {
 						m[0] = m[0] - OY;
-					}else {
+					} else {
 						m[0] = m[0] + OY;
 					}
-				}else {
+				} else {
 					m[1] = m[1] - dy;
 					OY = 0;
 				}
-			}else {
-				if(m[1] < n) {
-					int w = n -m[1];
-					if(w < dy) {
+			} else {
+				if (m[1] <= n - 1) {
+					int w = n - 1 - m[1];
+					if (w < dy) {
 						m[1] = m[1] + w;
 						OY = dy - w;
-						if(m[1] > p) {
+						if (m[1] > p) {
 							m[1] = m[1] - OY;
-						}else {
+						} else {
 							m[1] = m[1] + OY;
 						}
-					}else {
+					} else {
 						m[1] = m[1] + dy;
 						OY = 0;
 					}
 				}
 			}
-		 for(int x : m) {
-			 System.out.print(x + " ");
-		 }
-		 System.out.println("");
-		 }
-	 }
-	 
-}
- 
+			// her begynder vi at bevÃ¦ge katten
+			// Vi har tidligere gÃ¥et efter at katten bevÃ¦ger sig "tilfÃ¦ldigt", hvor den dog
+			// stadig prÃ¸ver at nÃ¥ hen til katten.
+			// Nu vil nu fÃ¥ den til at bevÃ¦ge sig sÃ¥ meget den kan i x, og sÃ¥ bevÃ¦ge sig i
+			// y.
+			// Det vil sige at den stadig er klog, men ikke sÃ¥ "tilfÃ¦ldig".
 
+			int aKatMusX = Math.abs(m[0] - k[0]);
+			int aKatMusY = Math.abs(m[1] - k[1]);
+			// vi laver igen nogle overflow variabler, som den bruger til at finde ud af
+			// hvor lant den skal bevÃ¦ge sig
+			// i y-retningen, efter at den har bevÃ¦get sig i x-retningen.
+
+			int overKatX = 0;
+
+			if (k[0] == m[0]) {
+				if (m[1] < k[1]) {
+					if (aKatMusY <= s) {
+						m[1] = m[1] - aKatMusY;
+					} else {
+						m[1] = m[1] - s;
+					}
+				} else if (m[1] > k[1]) {
+					if (aKatMusY <= s) {
+						m[1] = m[1] + aKatMusY;
+					} else {
+						m[1] = m[1] + s;
+					}
+				}
+			} else if (k[0] < m[0]) {
+				if (aKatMusX < s) {
+					k[0] = k[0] + aKatMusX;
+					overKatX = s - aKatMusX;
+					if (aKatMusY < overKatX) {
+						if (k[1] < m[1]) {
+							k[1] = k[1] + aKatMusY;
+						} else if (k[1] > m[1]) {
+							k[1] = k[1] - aKatMusY;
+						}
+					}
+				} else {
+					k[0] = k[0] + s;
+				}
+			} else {
+				if (aKatMusX < s) {
+					k[0] = k[0] - aKatMusX;
+					overKatX = s - aKatMusX;
+					if (m[1] < k[1]) {
+						if (overKatX < aKatMusY) {
+							k[1] = k[1] - overKatX;
+						} else {
+							k[1] = k[1] - aKatMusY;
+						}
+					}
+				} else {
+					k[0] = k[0] - s;
+					overKatX = 0;
+				}
+			}
+			for (int x : m) {
+				System.out.print(x + " ");
+			}
+			System.out.println("");
+		}
+
+		/*
+		 * Random randKat = new Random(); int katDx = randKat.nextInt(s); int katDy = s
+		 * - katDx;
+		 * 
+		 * int xAfstand = m[0] - k[0]; int yAfstand = m[1] - k[1];
+		 * 
+		 * if(xAfstand == 0) { k[0] = k[0]; if(yAfstand == 0) { break; }else if(yAfstand
+		 * < 0 && yAfstand <= s){ k[1] = k[1] - ((-1) * yAfstand); }else if(yAfstand < 0
+		 * && yAfstand * (-1) >= s){ k[1] = k[1] - s; }else if(yAfstand > 0 && yAfstand
+		 * ) {
+		 * 
+		 * }
+		 * 
+		 * }
+		 */
+
+
+
+	}
+}
