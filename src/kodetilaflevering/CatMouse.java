@@ -4,18 +4,23 @@ import java.util.Random;
 
 public class CatMouse {
 	public static void main(String[] args) {
+		//(engelsk fordi initiate lyder dumt på dansk, og fordi det er bedre til kodekommentare) 
+		//We create and initiate the variabels that decide the movement, gridsize, and amount of turns
 		int n = 30;
-		int s = 5;
+		int s = 1;
 		int t = 100;
 
+		//kalder den primære funktion med n, s og t.
 		runRandomSimulation(n, s, t);
 	}
 
 	public static void runRandomSimulation(int n, int s, int t) {
+		//Den her forklarer sig selv.
 		System.out.println("n=" + n + " s=" + s + " t=" + t);
-
+		//initiate variables for cat and mouse. They are arrays of length = 2. That corresponds to x and y position.
 		int kat[] = new int[2];
 		int mus[] = new int[2];
+		//mouse starts in the middle
 		int p = n / 2;
 
 		kat[0] = 0;
@@ -23,8 +28,10 @@ public class CatMouse {
 
 		mus[0] = p;
 		mus[1] = p;
-
+		
+		//Start med at kigge efter om parametrene passer. Bevægelses programmet skal ikek køre, hvis de ikke passer.
 		if (tjekParametre(n, s, t) == true) {
+			//We call the main move function. This uses the arrays and the other variables to move the cat and mouse
 			move(n, s, t, mus, kat);
 		} else {
 			System.out.print("Illegal Parameters!");
@@ -32,6 +39,7 @@ public class CatMouse {
 	}
 
 	public static boolean tjekParametre(int n, int s, int t) {
+		//test om parametrene er valide i forhold til kravene
 		if (n > 0 && 0 <= s && s <= n && t >= 0) {
 			return true;
 		} else {
@@ -40,55 +48,37 @@ public class CatMouse {
 	}
 
 	public static void move(int n, int s, int t, int[] m, int[] k) {
-		for (int i = 0; i != 100; i++) {
-			// System.out.println("[" + m[0] + ";" + m[1] + "] " + "[" + k[0] + ";" + k[1] +
-			// "] ");
+		//programmet skal køre et antal ture (t), eller til katten fanger musen
+		for (int i = 0; i != t; i++) {
 			Random randMus = new Random();
-			int dx = randMus.nextInt(s + 1); // Musen bev�ger sig en tilf�ldig afstand i x.
-			int dy = s - dx; // musen bev�ger sig altid s, s� den afstand som den skal bev�ge sig i y, er
+			int dx = randMus.nextInt(s + 1); // Musen bevæger sig en tilfældig afstand i x.
+			int dy = s - dx; // musen bevæger sig altid s, så den afstand som den skal bevæge sig i y, er
 			// resten af stykket fra x.
-			int o = 0; // overflow variabel for x til y.
 			int OY = 0; // overflow variabel fra y til x.
 			int p = n / 2; // vi laver igen en p.
 
-			// vi g�r det tilf�ldigt om musen bev�ger sig pos eller neg i y og x
+			// vi gør det tilfældigt om musen bevæger sig pos eller neg i y og x
 			Random plusMinus = new Random();
 			int randMusX = plusMinus.nextInt(4);
 			int randMusY = plusMinus.nextInt(4);
 
-			// nu bestemmer vi hvilken retning musen skal bev�ge sig, alt efeter hvad
-			// tilf�digheden gav
+			// nu bestemmer vi hvilken retning musen skal bevæge sig, alt efter hvad tilfæddigheden gav
 			if (randMusX == 1 || randMusX == 3) {
-				// vi kan f� tallene 0 og 1, s� hvis den er nul, bev�ger musen sig neg x, vi
-				// tjekker f�rst,
-				// om den afstand som musen VIL bev�ge sig i x, er st�rre end den afstan som den
-				// har hen til
-				// kanten, den vil sige dens x-koordinat
 				if (m[0] <= dx) {
-					// den kan s� kun bev�ge sig sin egen afstand
 					m[0] = m[0] - m[0];
-					// vi har s� en rest, som er den afstand den nu SKAL bev�ge sig ekstra i y
-					// o = dx - m[0];
 				} else {
 					m[0] = m[0] - dx;
-					o = 0;
 				}
 			} else {
 				if (m[0] <= n - 1) {
 					int e = (n - 1) - m[0];
 					if (e < dx) {
 						m[0] = m[0] + e;
-						// o = dx - e;
 					} else {
 						m[0] = m[0] + dx;
-						o = 0;
 					}
 				}
 			}
-			// vi siger nu at den afstand som musen kan bev�ge sig, m� v�re dy + o
-			dy = dy + o;
-			// int d = dy + dx;
-			// System.out.print();
 
 			if (randMusY == 1 || randMusY == 3) {
 				if (m[1] <= dy) {
@@ -184,27 +174,6 @@ public class CatMouse {
 				System.out.println("Catch!");
 				break;
 			}
-			/*
-			 * for (int x : m) { System.out.print(x + " "); }
-			 */
-			// System.out.println("");
 		}
-
-		/*
-		 * Random randKat = new Random(); int katDx = randKat.nextInt(s); int katDy = s
-		 * - katDx;
-		 * 
-		 * int xAfstand = m[0] - k[0]; int yAfstand = m[1] - k[1];
-		 * 
-		 * if(xAfstand == 0) { k[0] = k[0]; if(yAfstand == 0) { break; }else if(yAfstand
-		 * < 0 && yAfstand <= s){ k[1] = k[1] - ((-1) * yAfstand); }else if(yAfstand < 0
-		 * && yAfstand * (-1) >= s){ k[1] = k[1] - s; }else if(yAfstand > 0 && yAfstand
-		 * ) {
-		 * 
-		 * }
-		 * 
-		 * }
-		 */
-
 	}
 }
