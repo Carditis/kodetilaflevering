@@ -8,15 +8,14 @@ public class TestMitLort {
 		int s = 5;
 		int t = 100;
 
-		runSimulation(n, s, t);
+		runRandomSimulation(n, s, t);
 	}
 
-	public static void runSimulation(int n, int s, int t) {
-		tjekParametre(n, s, t);
+	public static void runRandomSimulation(int n, int s, int t) {
+		System.out.println("n=" + n + " s=" + s + " t=" + t);
 
 		int kat[] = new int[2];
 		int mus[] = new int[2];
-
 		int p = n / 2;
 
 		kat[0] = 0;
@@ -25,10 +24,11 @@ public class TestMitLort {
 		mus[0] = p;
 		mus[1] = p;
 
-		move(n, s, t, mus, kat);
-
-		// moveKat();
-
+		if (tjekParametre(n, s, t) == true) {
+			move(n, s, t, mus, kat);
+		} else {
+			System.out.print("Illegal Parameters!");
+		}
 	}
 
 	public static boolean tjekParametre(int n, int s, int t) {
@@ -40,7 +40,9 @@ public class TestMitLort {
 	}
 
 	public static void move(int n, int s, int t, int[] m, int[] k) {
-		for (int i = 0; i != 10; i++) {
+		for (int i = 0; i != 100; i++) {
+			// System.out.println("[" + m[0] + ";" + m[1] + "] " + "[" + k[0] + ";" + k[1] +
+			// "] ");
 			Random randMus = new Random();
 			int dx = randMus.nextInt(s + 1); // Musen bev�ger sig en tilf�ldig afstand i x.
 			int dy = s - dx; // musen bev�ger sig altid s, s� den afstand som den skal bev�ge sig i y, er
@@ -66,17 +68,17 @@ public class TestMitLort {
 					// den kan s� kun bev�ge sig sin egen afstand
 					m[0] = m[0] - m[0];
 					// vi har s� en rest, som er den afstand den nu SKAL bev�ge sig ekstra i y
-					o = dx - m[0];
+					// o = dx - m[0];
 				} else {
 					m[0] = m[0] - dx;
 					o = 0;
 				}
 			} else {
 				if (m[0] <= n - 1) {
-					int e = n - 1 - m[0];
+					int e = (n - 1) - m[0];
 					if (e < dx) {
 						m[0] = m[0] + e;
-						o = dx - e;
+						// o = dx - e;
 					} else {
 						m[0] = m[0] + dx;
 						o = 0;
@@ -85,6 +87,8 @@ public class TestMitLort {
 			}
 			// vi siger nu at den afstand som musen kan bev�ge sig, m� v�re dy + o
 			dy = dy + o;
+			// int d = dy + dx;
+			// System.out.print();
 
 			if (randMusY == 1 || randMusY == 3) {
 				if (m[1] <= dy) {
@@ -134,15 +138,15 @@ public class TestMitLort {
 			if (k[0] == m[0]) {
 				if (m[1] < k[1]) {
 					if (aKatMusY <= s) {
-						m[1] = m[1] - aKatMusY;
+						k[1] = k[1] - aKatMusY;
 					} else {
-						m[1] = m[1] - s;
+						k[1] = k[1] - s;
 					}
 				} else if (m[1] > k[1]) {
 					if (aKatMusY <= s) {
-						m[1] = m[1] + aKatMusY;
+						k[1] = k[1] + aKatMusY;
 					} else {
-						m[1] = m[1] + s;
+						k[1] = k[1] + s;
 					}
 				}
 			} else if (k[0] < m[0]) {
@@ -175,10 +179,15 @@ public class TestMitLort {
 					overKatX = 0;
 				}
 			}
-			for (int x : m) {
-				System.out.print(x + " ");
+			System.out.println("[" + m[0] + ";" + m[1] + "] " + "[" + k[0] + ";" + k[1] + "] ");
+			if (m[0] == k[0] && m[1] == k[1]) {
+				System.out.println("Catch");
+				break;
 			}
-			System.out.println("");
+			/*
+			 * for (int x : m) { System.out.print(x + " "); }
+			 */
+			// System.out.println("");
 		}
 
 		/*
@@ -196,8 +205,6 @@ public class TestMitLort {
 		 * 
 		 * }
 		 */
-
-
 
 	}
 }
