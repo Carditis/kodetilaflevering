@@ -45,19 +45,15 @@ public class TestMitLort {
 			// "] ");
 			Random randMus = new Random();
 			int dx = randMus.nextInt(s + 1); // Musen bev�ger sig en tilf�ldig afstand i x.
-			int dy = s - dx; // musen bev�ger sig altid s, s� den afstand som den skal bev�ge sig i y, er
-			// resten af stykket fra x.
+			int dy = s - dx;
 			int o = 0; // overflow variabel for x til y.
 			int OY = 0; // overflow variabel fra y til x.
 			int p = n / 2; // vi laver igen en p.
 
-			// vi g�r det tilf�ldigt om musen bev�ger sig pos eller neg i y og x
 			Random plusMinus = new Random();
 			int randMusX = plusMinus.nextInt(4);
 			int randMusY = plusMinus.nextInt(4);
 
-			// nu bestemmer vi hvilken retning musen skal bev�ge sig, alt efeter hvad
-			// tilf�digheden gav
 			if (randMusX == 1 || randMusX == 3) {
 				// vi kan f� tallene 0 og 1, s� hvis den er nul, bev�ger musen sig neg x, vi
 				// tjekker f�rst,

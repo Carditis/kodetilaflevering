@@ -25,7 +25,7 @@ public class Telefon {
 			return "fejl";
 		}
 		//vi kigger om stringen nu starter med +45, og så fjerner vi det
-		//Her får vi det problem, at hvis 
+		//Her får vi det problem, at hvis der står et +45 inde midt i telefonnumeret, så vil det også bare blive fjernet
 		if(n.startsWith("+45") ) {
 			n = n.replaceAll("\\+45", "");
 		}

@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class CatMouse {
 	public static void main(String[] args) {
+		//mange af kommentarende vil gå igen, for de tre filer som har med katten og musen at gøre
 		//(engelsk fordi initiate lyder dumt på dansk, og fordi det er bedre til kodekommentare) 
 		//We create and initiate the variabels that decide the movement, gridsize, and amount of turns
 		int n = 30;
@@ -122,10 +123,14 @@ public class CatMouse {
 			// vi laver igen nogle overflow variabler, som den bruger til at finde ud af
 			// hvor lant den skal bevæge sig
 			// i y-retningen, efter at den har bevæget sig i x-retningen.
-
+			
+			//overflow variabel, som viser hvor meget den må bevæge sig
 			int overKatX = 0;
-
+			//vi kigger på der når katten har samme x som musen. I det tilfælde vil den kun skulle bevæge sig i y retningen
 			if (k[0] == m[0]) {
+				//hvis de har samme x, så er det kun dens i som er anderledes.
+				//vi løber de forskællige situationer igennem, og bevæger katten i forholde vil hvor den er.
+				//hver gang vi prøver at bevæge katten i en retning, tjekker vi først hvor langt den må bevæge sig i den retning.
 				if (m[1] < k[1]) {
 					if (aKatMusY <= s) {
 						k[1] = k[1] - aKatMusY;
@@ -139,6 +144,8 @@ public class CatMouse {
 						k[1] = k[1] + s;
 					}
 				}
+				//vi undersøger nu hvis katen er til venstre for musen, og bevæger den alt efter hvor den befinder sig.
+				//Det vil også sige, at hvis det ikke er muligt for katten at bevæge sig sin maksinmale længde i x, prøver den i y
 			} else if (k[0] < m[0]) {
 				if (aKatMusX < s) {
 					k[0] = k[0] + aKatMusX;
@@ -154,6 +161,7 @@ public class CatMouse {
 					k[0] = k[0] + s;
 				}
 			} else {
+				//nu er katten så til højre for musen, ellers sker det samme som før.
 				if (aKatMusX < s) {
 					k[0] = k[0] - aKatMusX;
 					overKatX = s - aKatMusX;
@@ -169,6 +177,8 @@ public class CatMouse {
 					overKatX = 0;
 				}
 			}
+			//Hver gang løkken køres igennem, vil deres koordinator blive printet ud.'
+			//Det undersøges også om katten har fanget musen, og stopper løkken hvis det er, samt printer at den er fanget.
 			System.out.println("[" + m[0] + ";" + m[1] + "] " + "[" + k[0] + ";" + k[1] + "] ");
 			if (m[0] == k[0] && m[1] == k[1]) {
 				System.out.println("Catch!");
