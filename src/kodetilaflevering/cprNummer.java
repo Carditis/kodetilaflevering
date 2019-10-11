@@ -10,14 +10,20 @@ public class cprNummer {
 		System.out.print(TestafCPR(s));
 	}
 	public static String TestafCPR(String s) {
-		//Tester hvorvidt det sidste tal er lige eller ulige
-		String a;
+		String a = "test";
+		//Her testes først om cpr-nummeret indeholder bogstaver, og hvis dette gør, er det ikke et cpr-nummer
 		if (erbogstav (s) > 1) {
-			a =("ikke et cprnummer");			
+			a =("ikke et cprnummer");		
+			// Her testes om længden passer med de 10 karakterer, som der er i et cpr-nummer
+			//ellers er det ikke et cpr-nummer
 		} else if (s.length() > 10 || s.length() < 10){
 			a =("ikke et cprnummer");
+			//Her tester om datoen i cpr-nummeret passer til det tilhørende nummer, hvis ikke
+			//er det ikke et cpr-nummer
 		} else if (passerdato(s) == false) {
 			a =("ikke et cprnummer");
+			//Hvis cpr-nummeret har bestået alle de andre test, er det et cpr-nummer,
+			//og der kigges nu på om det er lige eller ulige
 		} else {
 			String lige = s.substring(9);
 			int liget = Integer.parseInt(lige);
@@ -26,13 +32,11 @@ public class cprNummer {
 				a =("lige cprnummer");
 			} else if (ulige != 0){
 				a =("ulige cprnummer");
-			} else {
-				a =("ikke et cprnummer");
-			}
+			} 
 		}
 		return a;
 	}
-	
+//Undersøge om stringen indeholder bogstaver
 	public static int erbogstav (String s) {
 		int erbogstav = 0;
 		for (int i = 0; i < s.length(); i++) {
@@ -43,7 +47,7 @@ public class cprNummer {
 		}
 		return erbogstav;
 	}
-
+//Metoden som tjekker om datoen passer til måneden, og skudår.
 	public static boolean passerdato(String s) {
 		boolean datoer = false;
 		int dage;
@@ -65,7 +69,7 @@ public class cprNummer {
 		int cpr5 = Integer.parseInt(s.substring(5,6));
 		//Da de første værdi er tiere, og den næste 1nere, ganges den første med 10
 		int år = 10 * cpr4 + cpr5;
-		
+
 		//Måneder med 31 dage	
 		if (måned == 1 || måned == 3 || måned == 5 || måned == 7 || måned == 8 || måned == 10 || måned == 12) {
 			dage = 31;
