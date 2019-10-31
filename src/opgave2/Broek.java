@@ -2,51 +2,93 @@ package opgave2;
 
 public class Broek {
 
-	
-	private int t;
-	private int n;
+	int numerator;
+	int denominator;
 
 	public Broek(int t, int n) {
-		this.t = t;
-		this.n = n;
-		plus(Broek.t, Broek.n);
-//		minus();
-//		gange();
-//		divider();
-//		reciprok();
+		this.numerator = t;
+		this.denominator = n;
+
+	}	
+	//	Gettting Numerator
+	public int getNumerator() {
+		return numerator;
 	}
 
-	private void reciprok(Broek f) {
-		
-		
+	//	Getting denominator
+	public int getDenominator() {
+		return denominator;
 	}
 
-	private void divider(Broek f) {
-		// TODO Auto-generated method stub
-		
+	//	Adding two fractions
+	public void plus (Broek f) {
+
+		//		Calculating Numerator and finding common denominator
+		this.numerator = this.numerator * f.denominator + f.numerator * this.denominator;
+		this.denominator = this.denominator * f.denominator;
+
+		reduceFraction();
 	}
 
-	private void gange(Broek f) {
-		// TODO Auto-generated method stub
-		
+//		Subtracting two fractions
+	public void minus (Broek f) {
+		//		Calculating Numerator and finding common denominator
+		this.numerator = this.numerator * f.denominator - f.numerator * this.denominator;
+		this.denominator = this.denominator * f.denominator;
+
+		reduceFraction();
+
 	}
 
-	private void minus(Broek f) {
-		// TODO Auto-generated method stub
-		
+//		Multiplying two fractions
+	public void gange (Broek f) {
+//				Calculating Numerator and finding common denominator
+		this.numerator = this.numerator * f.denominator * f.numerator * this.denominator;
+		this.denominator = this.denominator * f.denominator;
+
+		reduceFraction();
+
 	}
 
-	private void plus(Broek f) {
-		int numerator = t;
-		int denominator = n;
-		
-		this.t = t * f.n;
-		this.n = n * f.n;
-		f.t = f.t * n;
-		//f.n = f.n * n;
+	public void dvision (Broek f) {
+//				Calculating Numerator and finding common denominator
+		this.numerator = this.numerator * f.denominator;
+		this.denominator = f.numerator * this.denominator;
 
-		numerator = this.t + f.t;
-		denominator = this.n;
-		
+		reduceFraction();
+	}
+
+	public void reciprok () {
+//			Creating a remporary variable
+		int temporary;
+
+//				Switching places
+		temporary = this.denominator;
+		this.denominator = this.numerator;
+		this.numerator = temporary;
+
+	}
+
+
+	public void reduceFraction () {
+//		Reducing fration to lowest denominator
+		for (int i = 1; i < this.denominator; i++) {
+			if(this.numerator % 2 == 0 && this.denominator % 2 == 0) {
+				this.numerator = this.numerator / 2;
+				this.denominator = this.denominator / 2;
+			} else {
+				break;
+			}
+		}
+	}
+
+	public String toString() {
+		if (this.numerator < 0 && this.denominator < 0 || this.denominator == 0) {
+			throw new IllegalArgumentException("Either negative number, or denominator = 0");
+		} else if (this.numerator >= 0 && this.denominator > 0) {
+			return this.numerator + "/" + this.denominator;
+		} else {
+			throw new IllegalArgumentException("");
+		}
 	}
 }
