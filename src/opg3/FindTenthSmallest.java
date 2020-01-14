@@ -3,7 +3,7 @@ package opg3;
 
 public class FindTenthSmallest {
 	long[] array;
-
+ 
 	public static long findTenthSmallest(long[] ts) {
         int n = 10;
         long[] array = new long[n];
